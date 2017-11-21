@@ -5,9 +5,12 @@ sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose -v
 nvm install 7
-nvm use
-npm install –g yarn
+nvm use 7
+npm install -g yarn
 pushd recipes-api
+npm set registry https://registry.npmjs.org/
+npm config set proxy http://ptmproxy.gmv.es
+npm config set https-proxy http://ptmproxy.gmv.es 
 yarn install
 popd
 pushd recipes-crawler
@@ -17,4 +20,5 @@ pushd recipes-id-generator
 yarn install
 popd
 pushd recipes-infra
+yarn install
 popd
