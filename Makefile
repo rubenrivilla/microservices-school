@@ -2,7 +2,7 @@ lint:
 	@node_modules/.bin/eslint .
 
 qa:
-	@make lint && npm run test
+	@docker run --name $(SERVICE) --env SERVICE_ENV=build --rm --network=local --entrypoint npm $(SERVICE):$(TRAVIS_BUILD_NUMBER) run qa --
 
 brand:
 	@node_modules/make-manifest/bin/make-manifest --extra "build.url: https://travis-ci.org/rubenrivilla/microservices-school/builds/"$(TRAVIS_BUILD_ID) --extra "build.number: "$(TRAVIS_BUILD_NUMBER)
@@ -14,4 +14,4 @@ ensure-dependencies:
 package:
 	@docker login -u=$(DOCKER_USERNAME) -p=$(DOCKER_PASSWORD) quay.io
 	@docker build --tag $(SERVICE):$(TRAVIS_BUILD_NUMBER) .
-	@docker images	
+	@docker images
